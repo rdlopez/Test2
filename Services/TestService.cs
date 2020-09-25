@@ -23,9 +23,9 @@ namespace Services
             return this.repository.Update(file);
         }
 
-        public IList GetAll()
+        public async Task<IList<UploadFile>> GetAll()
         {
-            return this.repository.GetAll().ToList();
+            return await this.repository.GetAll();
         }
     }
 }

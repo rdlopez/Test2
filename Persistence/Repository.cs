@@ -29,9 +29,9 @@ namespace Persistence
             throw new NotImplementedException();
         }
 
-        public IList<Entity> GetAll(bool useCache = true, bool IncludeDisabled = false)
+        public async Task<IList<Entity>> GetAll(bool useCache = true, bool IncludeDisabled = false)
         {
-            return context.Set<Entity>().ToList();
+            return await context.Set<Entity>().ToListAsync();
         }
 
         public IEnumerator<Entity> GetEnumerator()

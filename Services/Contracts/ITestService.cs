@@ -8,6 +8,6 @@ namespace Services.Contracts
     public interface ITestService
     {
         Task Update(UploadFile file);
-        IList GetAll();
+        Task<IList<UploadFile>> GetAll();
     }
 }

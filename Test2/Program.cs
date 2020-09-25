@@ -6,6 +6,7 @@ using Services;
 using Services.Contracts;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Test2
 {
@@ -13,6 +14,12 @@ namespace Test2
     {
         static void Main(string[] args)
         {
+            MainAsync(args).GetAwaiter().GetResult();
+        }
+
+        static async Task MainAsync(string[] args)
+        {
+            Console.WriteLine($"iteracion: { args[0]}");
             //args[0] = "1";
             // Create service collection and configure our services
             var services = ConfigureServices();
@@ -20,7 +27,7 @@ namespace Test2
             var serviceProvider = services.BuildServiceProvider();
 
             // Kick off our actual code
-            serviceProvider.GetService<ConsoleApplication>().RunAsync();
+            await serviceProvider.GetService<ConsoleApplication>().RunAsync(int.Parse(args[0]));
         }
 
         private static IServiceCollection ConfigureServices()
@@ -57,22 +64,22 @@ namespace Test2
         {
             _testService = testService;
         }
-        public async System.Threading.Tasks.Task RunAsync()
+        public async System.Threading.Tasks.Task RunAsync(int newValue)
         {
-            var result = _testService.GetAll();
+            var result = await _testService.GetAll();
 
             if (result != null) {
                 var item = result[0] as UploadFile;
 
-                Console.WriteLine($"Before update; item: {item.Name}, status : {item.Status}");
+                Console.WriteLine($"Current; item: {item.Name}, status : {item.Status}, time: {DateTime.Now}");
 
-                //item.Status = newValue;
+                item.Status = newValue;
 
-                Console.WriteLine($"Before update; value: {item.Status}");
+                Console.WriteLine($"Before update; value: {item.Status}, time: {DateTime.Now}");
 
                 await _testService.Update(item);
 
-                Console.WriteLine($"After update; item: {item.Name}, status : {item.Status}");
+                Console.WriteLine($"After update; item: {item.Name}, status : {item.Status}, time: {DateTime.Now}");
             }
         }
     }

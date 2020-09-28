@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -8,6 +6,8 @@ namespace Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [ConcurrencyCheck]
         public int Status { get; set; }
     }
 }
